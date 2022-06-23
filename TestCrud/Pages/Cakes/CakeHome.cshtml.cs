@@ -8,18 +8,21 @@ using TestCrud.Data.Entities;
 
 namespace TestCrud.Pages.Cakes
 {
-    public class IndexModel : PageModel
+    public class CakeHomeModel : PageModel
     {
-        private readonly CakeDBContext _context;
+         private readonly CakeDBContext _DbContext;
+
         public List<Cake> AllCakes = new List<Cake>();
-        protected IndexModel(CakeDBContext context)
+        //[BindProperty]
+        //public List<Cake> AllCakes { get; set; }
+        public CakeHomeModel(CakeDBContext dbContext)
         {
-            _context = context;
+            _DbContext = dbContext;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            AllCakes = await _context.Cakes.ToListAsync();
+            AllCakes = await _DbContext.Cake.ToListAsync();
             return Page();
         }
     }

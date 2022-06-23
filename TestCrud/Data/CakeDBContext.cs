@@ -5,7 +5,7 @@ namespace TestCrud.Data
 {
     public class CakeDBContext : DbContext
     {
-        public DbSet<Cake> Cakes { get; set; }
+        public DbSet<Cake> Cake { get; set; }
         public CakeDBContext(DbContextOptions<CakeDBContext> options) : base(options)
         {
         }

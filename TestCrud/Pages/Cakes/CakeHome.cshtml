@@ -1,9 +1,14 @@
-﻿@page
-@model TestCrud.Pages.Cakes.IndexModel
+﻿@page "/cake/home"
+@model TestCrud.Pages.Cakes.CakeHomeModel
 @{
 }
 
 <div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <a asp-page="./create" class="btn btn-primary">Create New Cake</a>
+        </div>
+    </div>
     <div class="row">
         @foreach (var item in Model.AllCakes)
         {
