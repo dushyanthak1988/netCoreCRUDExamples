@@ -1,0 +1,21 @@
+﻿@page
+@model TestCrud.Pages.Cakes.IndexModel
+@{
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.AllCakes)
+        {
+            <div class="col-md-3 m-3">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.Price $</h6>
+                        <p class="card-text">@item.Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
