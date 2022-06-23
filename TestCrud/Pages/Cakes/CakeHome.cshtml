@@ -18,7 +18,8 @@
                         <h5 class="card-title">@item.Name</h5>
                         <h6 class="card-subtitle mb-2 text-muted">@item.Price $</h6>
                         <p class="card-text">@item.Description</p>
-                        <a asp-page="./edit" asp-route-id="@item.id" class="btn btn-primary">Edit</a>
+                        <a asp-page="./EditCake" asp-route-id="@item.ID" class="btn btn-primary">Edit</a>
+                        <a asp-page="./DeleteCake" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
                     </div>
                 </div>
             </div>

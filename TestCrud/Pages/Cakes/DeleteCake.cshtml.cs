@@ -4,23 +4,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TestCrud.Data;
-using TestCrud.Data.Entities;
 using TestCrud.ViewModel;
 
 namespace TestCrud.Pages.Cakes
 {
-    public class EditCakeModel : PageModel
+    public class DeleteCakeModel : PageModel
     {
-        private CakeDBContext _DbContext;
-        public EditCakeModel(CakeDBContext dbContext)
+        private readonly CakeDBContext _DbContext;
+        public DeleteCakeModel(CakeDBContext dbContext)
         {
             _DbContext = dbContext;
         }
 
-        [BindProperty]
+        public string ErrorMessage { get; set; }
         public CakeVM? CakeVm { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id, bool? saveChangesError)
         {
             CakeVm = await _DbContext.Cake
                     .Where(_ => _.ID == id)
@@ -37,29 +35,32 @@ namespace TestCrud.Pages.Cakes
             {
                 return NotFound();
             }
+            if (saveChangesError ?? false)
+            {
+                ErrorMessage = $"Error to delete the record id - {id}";
+            }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            var cakeToUpdate = await _DbContext.Cake.FindAsync(id);
+            var recordToDelete = await _DbContext.Cake.FindAsync(id);
 
-            if (cakeToUpdate == null)
+            if (recordToDelete == null)
             {
-                return NotFound();
+                return Page();
             }
 
-            if (await TryUpdateModelAsync<Cake>(
-                cakeToUpdate,
-                "CakeVm",
-                c => c.Name, c => c.Description, c => c.Price
-            ))
+            try
             {
+                _DbContext.Cake.Remove(recordToDelete);
                 await _DbContext.SaveChangesAsync();
                 return Redirect("/Cake/home");
             }
-
-            return Page();
+            catch
+            {
+                return Redirect($"/Cake/delete?id={id}&saveChangesError=true");
+            }
         }
     }
 }

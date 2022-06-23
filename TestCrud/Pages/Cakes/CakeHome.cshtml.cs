@@ -10,11 +10,10 @@ namespace TestCrud.Pages.Cakes
 {
     public class CakeHomeModel : PageModel
     {
-         private readonly CakeDBContext _DbContext;
+        private readonly CakeDBContext _DbContext;
 
         public List<Cake> AllCakes = new List<Cake>();
-        //[BindProperty]
-        //public List<Cake> AllCakes { get; set; }
+
         public CakeHomeModel(CakeDBContext dbContext)
         {
             _DbContext = dbContext;
